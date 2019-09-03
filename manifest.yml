@@ -1,0 +1,13 @@
+---
+applications:
+- name: ((app_prefix))-fortune-api
+  memory: 1024M
+  path: ./target/fortune-teller-api-0.0.1-SNAPSHOT.jar
+  instances: 1
+  services:
+  - ((config_server))
+  - ((service_registry))
+  - ((circuit_breaker))
+  - ((cloud_bus))
+  env:
+    TRUST_CERTS: ((cf_trust_certs))
