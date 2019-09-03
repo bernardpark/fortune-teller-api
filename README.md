@@ -58,7 +58,7 @@ Examine the manifest.yml file to review the application deployment configuration
 
 ### Test Cloud Config
 1. Make a change to you `application.yml` with a new fallback message
-1. Refresh your application beans using the actuator endpoint (ex. `curl -k https://$YOUR_UI_ENDPOINT/actuator/refresh -X POST`)
+1. Refresh your application beans using the actuator endpoint (ex. `curl -k https://$YOUR_API_ENDPOINT/actuator/refresh -X POST`)
 1. Visit `https://$YOUR_API_ENDPOINT/random`
 1. Notice the changed default fallback message
 
