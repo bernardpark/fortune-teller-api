@@ -22,15 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 import io.spring.cloud.samples.fortuneteller.fortuneapi.fortunes.ApiService;
 import io.spring.cloud.samples.fortuneteller.fortuneapi.fortunes.Fortune;
 
-@RestController
+//@RestController
 public class ApiController {
 
     @Autowired
     ApiService service;
 
-    @RequestMapping("/random")
-    public Fortune randomFortune() {
-        return service.randomFortune();
-    }
+//    @RequestMapping("/random")
+//    public Fortune randomFortune() {
+//        return service.randomFortune();
+//    }
 
 }
