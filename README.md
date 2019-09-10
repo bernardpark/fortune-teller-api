@@ -40,7 +40,7 @@ Save your file.
 
 ### Coding Exercise 3 - Consume an External Configuration
 
-Now that we can consume external configuration, let's do so in a properties class. In your `FortuneProperties.java` class, add the `@@ConfigurationProperties` annotation while referring to prefix `service`. This will tell your class to consume configuration as a Configuration Client application, and apply the prefix `service` as default. You should notice that your configuration repository follows this property prefix. In particular, notice the `service.fallbackFortune` and `service.serviceURL` properties. These are the same as the class variables that are provided for you.
+Now that we can consume external configuration, let's do so in a properties class. In your `FortuneProperties.java` class, add the `@ConfigurationProperties` annotation while referring to prefix `service`. This will tell your class to consume configuration as a Configuration Client application, and apply the prefix `service` as default. You should notice that your configuration repository follows this property prefix. In particular, notice the `service.fallbackFortune` and `service.serviceURL` properties. These are the same as the class variables that are provided for you.
 Also make sure you add the `@RefreshScope` annotation. This will allow you to refresh this bean with updated configuration by posting to the Spring Actuator refresh endpoint.
 
 **FortuneProperties.java**
@@ -122,6 +122,24 @@ public class Application {
 ```
 Save your file.
 
+### Coding Exercise 6 - Add a REST Endpoint
+Now that we have a repository method, we need a way for an application user to execute the method. Open your `ApiController.java` class and view its annotations. The `@RestController` annotation tells Spring that this class will define our REST endpoints. We also `@Autowired` the `ApiService` bean so that it can be referenced in this class. Remember, we can autowire this bean because we had added the `@Service` annotation,.
+
+Create a method called `randomFortune()` to call the `ApiService.randomFortune()` method we coded earlier. Annotate with the `@RequestMapping` annotation, specifying the endpoint to map to `/random`.
+
+**ApiController.java**
+
+```
+...
+    @RequestMapping("/random")
+    public Fortune randomFortune() {
+        return service.randomFortune();
+    }
+...
+```
+
+Save your file.
+
 ## Deploying the Application
 Build and deploy application on current 'cf target'
 
@@ -155,7 +173,7 @@ cf create-service $SERVICE_NAME $SERVICE_PLAN $YOUR_SERVICE_NAME
 applications:
 - name: ((app_name))
   memory: 1024M
-  path: ./target/fortune-teller-service-0.0.1-SNAPSHOT.jar
+  path: ./target/fortune-teller-api-0.0.1-SNAPSHOT.jar
   instances: 1
   services:
   - ((config_server))
@@ -195,7 +213,7 @@ Examine the manifest.yml file to review the application deployment configuration
 1. Notice another random fortune returned
 
 ### Test Circuit Breaker
-1. Stop your [Fortune Service](https://github.com/bernardpark/fortune-teller-service/tree/master_lab) (ex. `cf stop $YOUR_APP_SUFFIX-fortune-service`)
+1. Stop your [Fortune Service](https://github.com/bernardpark/fortune-teller-service/tree/master_lab) (ex. `cf stop $YOUR_SERVICE_APP_NAME`)
 1. Visit `https://$YOUR_API_ENDPOINT/random`
 1. Notice the default fallback message
 
